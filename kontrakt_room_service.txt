@@ -1,0 +1,115 @@
+1. Tworzenie pokoju
+Metoda : POST
+REQUEST:
+{
+	"ownerColor": "WHITE", // string, "WHITE" OR "BLACK"
+	"roomName": "pokój", // string, unique
+	"roomPassword": "pokój1234" // string	
+}
+RESPONSE:
+SUCCESS :
+{
+	"status": 200, //integer
+	"roomOwnerToken": "52a707b7-bc68-48cf-8c90-2742764c16da" //UUID
+}
+ERROR
+{
+	"status": 400, //integer, 4xx OR 5xx, rodzaj kody identyfikuje rodzaj błędu
+	"message": "Error occured during initailizing room", //string
+	"description": "Sample description" //string, extra info
+}
+
+
+
+
+2. Pobierz listę pokoi
+Metoda: GET
+RESPONSE:
+SUCCESS :
+{
+	"status": 200, //integer
+	"rooms": [
+		{
+			"roomId": "bd4d5303-9ac3-4109-bf36-72fe39dcd408", // UUID
+			"roomName": "pokój", // string,
+			"joinerColor": "WHITE", // string, "WHITE" OR "BLACK"
+		},
+		{
+			...	
+		}
+	]
+}
+ERROR:
+{
+	"status": 400, //integer, 4xx OR 5xx, rodzaj kody identyfikuje rodzaj błędu
+	"message": "Error occured during fetching rooms", //string
+	"description": "Sample description" //string, extra info
+}
+
+
+
+
+3. Dołącz do pokoju
+Metoda POST
+REQUEST:
+{
+	"roomId": "bd4d5303-9ac3-4109-bf36-72fe39dcd408", // UUID
+	"accessToken": "bd4d5303-9ac3-4109-bf36-72fe39dcd408", // UUID, opcjonalne, jeżeli podane, backend sprawdzi czy (token == ownerToken || token == joinerToken), jeżeli nie podane i wcześniej nikt nie dołączył to system zwróci nowy joinerToken
+	"roomPassword" : "roomPassword1234" //string
+}
+RESPONSE:
+SUCCESS (jeżeli nie podany accessToken i wcześniej nikt nie dołączył oprócz właściciela pokoju):
+{	
+	"status": 200, //integer
+	"joinerToken": "bd4d5303-9ac3-4109-bf36-72fe39dcd408", // UUID, opcjonalne, jeżeli gracz dołącza do pokoju do którego wcześniej nikt nie dołączył
+	"gameTopicId": "bd4d5303-9ac3-4109-bf36-72fe39dcd408", // UUID
+	"playerColor" : "WHITE", // string, "WHITE" OR "BLACK"
+}
+ERROR (jeżeli hasło do pokoju jest niepoprawne):
+{
+	"status": 401, //integer
+	"message": "Wrong password" //string
+}
+ERROR (jeżeli nie podany accessToken i już pokój jest zajęty):
+{
+	"status": 402, //integer
+	"message": "Room unavailable, players already joined" //string
+}
+ERROR (jeżeli podany accessToken i jest on niepoprawny):
+{
+	"status": 403, //integer
+	"message": "User with this access token is not owner or joiner." //string
+}
+ERROR:
+{
+	"status": 400, //integer, 4xx OR 5xx, rodzaj kody identyfikuje rodzaj błędu
+	"message": "Error occured during joining room", //string
+	"description": "Sample description" //string, extra info
+}
+
+
+
+
+4. Usuń pokój
+Metoda DELETE
+REQUEST:
+HEADER:
+{
+	"Room-Id": "bd4d5303-9ac3-4109-bf36-72fe39dcd408" // UUID
+}
+RESPONSE:
+SUCCESS:
+{
+	"status": 200, //integer
+}
+ERROR (jeżeli pokój nie istnieje):
+{
+	"status": 401, //integer
+	"message": "Room already deleted" //string
+}
+ERROR:
+{
+	"status": 400, //integer, 4xx OR 5xx, rodzaj kody identyfikuje rodzaj błędu
+	"message": "Error occured during deleting room", //string
+	"description": "Sample description" //string, extra info
+}

@@ -1,0 +1,34 @@
+Nazwa topicka :
+chess_bad0d9a70c3c4ab38527dd9ecf959d66_board
+
+BODY (wchodzące/wychodzące):
+{
+	"turn": "BLACK", //string, "WHITE" OR "BLACK" or "FINISHED"
+	"winner": "WHITE", //string, "WHITE" OR "BLACK" OR "STALE_MATE", opcjonalne, jeżeli nie ma to gra nadal trwa
+	"board": { 
+		"black": [
+			{
+				"pieceCode":"K", //string
+				"position":"A7", //string
+				"possibleMoves": ["A6", "A5",...], //string list
+				"possibleAttacks: ["A6", "A5",...], //string list
+				"posiibleSpecialMoves: ["A6", "A5",...] //string list, np. roszada
+			}
+		],
+		"white": {
+			//analogicznie jak czarne
+		}
+	},
+	"lastBoardEvents": [ //dla optymalizacji na froncie, żeby nie iterować przez całą kolekcję figur i nie porównywać pozycji, tą logike ma wykonywać backend
+		{
+			"fromPieceCode":"K",
+			"toPieceCode":"K",
+			"fromPosition":"A7",
+			"toPosition":"A6",
+			"event": "KILL" //string, eventy : "MOVED","KILLED","CHECKED"(dotyczy królów),"SWITCHED"(zamiana piona na inną figurę)
+		},
+		{
+			...
+		}
+	]
+}

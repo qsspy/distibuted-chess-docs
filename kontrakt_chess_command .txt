@@ -1,0 +1,79 @@
+1. Zrób ruch
+Metoda: POST
+REQUEST
+HEADER
+{
+	"Game-Topic-Id": "bd4d5303-9ac3-4109-bf36-72fe39dcd408" // UUID
+}
+BODY
+{
+	"color": "WHITE", // string, "WHITE" OR "BLACK"
+	"pieceCode": "K", // string, kod figury, lista kodów na dole dokumentacji
+	"destination": "A7", //string, position on board
+	"switchPieceCode" : "Q" //string, kod figury, bez numeru, opcjonalne, jeżeli gracz chce wymienić piona
+}
+RESPONSE:
+SUCCESS :
+{
+	"status": 200, //integer
+}
+ERROR (ruch jest niemożliwy)
+{
+	"status": 401, //integer
+	"message": "Forbidden move" //string
+}
+ERROR
+{
+	"status": 400, //integer, 4xx OR 5xx, rodzaj kody identyfikuje rodzaj błędu
+	"message": "Error occured during making move", //string
+	"description": "Sample description" //string, extra info
+}
+
+2.Inicjuj grę (wysłanie nowej planszy na topic kafkowy, na ten endpoint stuka room-service gdy jest tworzony pokój, dodatkowo nowa plansza jest zapisywana w bazie (lub w pamięci jak u nas)
+Metoda: GET
+HEADER
+{
+	"Game-Topic-Id": "bd4d5303-9ac3-4109-bf36-72fe39dcd408" // UUID
+}
+SUCCESS :
+{
+	"status": 200, //integer
+}
+ERROR (gra dla tego id już istnieje)
+{
+	"status": 401, //integer
+	"message": "This game already exists" //string
+}
+ERROR
+{
+	"status": 400, //integer, 4xx OR 5xx, rodzaj kody identyfikuje rodzaj błędu
+	"message": "Error occured during making move", //string
+	"description": "Sample description" //string, extra info
+}
+
+3.Usuń grę (na ten endpoint stuka room-service gdy jest usuwany pokój, gra ma być usunięta ze źródła danych
+Metoda: DELETE
+SUCCESS :
+{
+	"status": 200, //integer
+}
+ERROR
+{
+	"status": 400, //integer, 4xx OR 5xx, rodzaj kody identyfikuje rodzaj błędu
+	"message": "Error occured during making move", //string
+	"description": "Sample description" //string, extra info
+}
+
+Kody figur:
+
+"K" - Król
+"Q1" - Królowa
+"B1" - Goniec lewy
+"B2" - Goniec prawy
+"KN1" - Koń lewy
+"KN2" - Koń prawy
+"R1" - Wieża lewa
+"R2" - Wieża prawa
+"P1" - Pion pierwszy od lewej
+"P2" - Pion drugi od lewej
+piony etc. aż do P8
