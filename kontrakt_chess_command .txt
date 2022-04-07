@@ -1,4 +1,5 @@
 1. Zrób ruch
+ENDPOINT : /api/board
 Metoda: POST
 REQUEST
 HEADER
@@ -30,6 +31,7 @@ ERROR
 }
 
 2.Inicjuj grę (wysłanie nowej planszy na topic kafkowy, na ten endpoint stuka room-service gdy jest tworzony pokój, dodatkowo nowa plansza jest zapisywana w bazie (lub w pamięci jak u nas)
+/api/board
 Metoda: GET
 HEADER
 {
@@ -52,6 +54,7 @@ ERROR
 }
 
 3.Usuń grę (na ten endpoint stuka room-service gdy jest usuwany pokój, gra ma być usunięta ze źródła danych
+/api/board
 Metoda: DELETE
 SUCCESS :
 {

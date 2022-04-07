@@ -1,5 +1,5 @@
 Nazwa topicka :
-chess_bad0d9a70c3c4ab38527dd9ecf959d66_board
+np. chess_bad0d9a70c3c4ab38527dd9ecf959d66_board
 
 BODY (wchodzące/wychodzące):
 {
@@ -21,10 +21,10 @@ BODY (wchodzące/wychodzące):
 	},
 	"lastBoardEvents": [ //dla optymalizacji na froncie, żeby nie iterować przez całą kolekcję figur i nie porównywać pozycji, tą logike ma wykonywać backend
 		{
-			"fromPieceCode":"K",
-			"toPieceCode":"K",
-			"fromPosition":"A7",
-			"toPosition":"A6",
+			"fromPieceCode":"K", //string, opcjonalne
+			"toPieceCode":"K", //string, opcjonalne
+			"fromPosition":"A7", //string, opcjonalne
+			"toPosition":"A6", //string, opcjonalne
 			"event": "KILL" //string, eventy : "MOVED","KILLED","CHECKED"(dotyczy królów),"SWITCHED"(zamiana piona na inną figurę)
 		},
 		{

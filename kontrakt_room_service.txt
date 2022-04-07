@@ -1,4 +1,5 @@
 1. Tworzenie pokoju
+ENDPOINT : /api/rooms
 Metoda : POST
 REQUEST:
 {
@@ -19,10 +20,8 @@ ERROR
 	"description": "Sample description" //string, extra info
 }
 
-
-
-
 2. Pobierz listę pokoi
+ENDPOINT : /api/rooms
 Metoda: GET
 RESPONSE:
 SUCCESS :
@@ -46,10 +45,8 @@ ERROR:
 	"description": "Sample description" //string, extra info
 }
 
-
-
-
 3. Dołącz do pokoju
+ENDPOINT : /api/rooms/join
 Metoda POST
 REQUEST:
 {
@@ -87,10 +84,8 @@ ERROR:
 	"description": "Sample description" //string, extra info
 }
 
-
-
-
 4. Usuń pokój
+ENDPOINT : /api/rooms
 Metoda DELETE
 REQUEST:
 HEADER:
