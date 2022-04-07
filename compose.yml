@@ -31,19 +31,7 @@ services:
       - dev-net
     depends_on:
       - zookeeper
-      
-  room-service:
-    container_name: room-service
-    image: 'qsspy/distributed-chess-room-service:latest'
-    ports:
-      - '8082:8081'
-    environment:
-      - KAFKA_BOOTSTRAP_ADDRESS=kafka:9092
-    networks:
-      - dev-net
-    depends_on:
-      - kafka
-      
+
   chess-command:
     container_name: chess-command
     image: 'qsspy/distributed-chess-chess-command:latest'
@@ -55,3 +43,17 @@ services:
       - dev-net
     depends_on:
       - kafka
+
+  room-service:
+    container_name: room-service
+    image: 'qsspy/distributed-chess-room-service:latest'
+    ports:
+      - '8082:8081'
+    environment:
+      - KAFKA_BOOTSTRAP_ADDRESS=kafka:9092
+      - CHESS_COMMAND_ADDRESS=http://chess-command:8083
+    networks:
+      - dev-net
+    depends_on:
+      - kafka
+      - chess-command
