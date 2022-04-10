@@ -1,3 +1,5 @@
+Na początku trzeba wejść do folderu ze skryptami
+
 cd opt/bitnami/kafka/bin
 
 //list topics
@@ -8,3 +10,6 @@ kafka-topics.sh --create --bootstrap-server kafka:9092 --replication-factor 1 --
 
 //delete topic
 kafka-topics.sh --delete --bootstrap-server kafka:9092 --topic chess_123456_board
+
+//push messages from console to topic
+kafka-console-producer.sh --broker-list kafka:9092 --topic chess_517707f778e64f89baaf9c32d233a584_board --timeout 10

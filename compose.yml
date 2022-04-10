@@ -56,4 +56,17 @@ services:
       - dev-net
     depends_on:
       - kafka
-      - chess-command
+
+  chess-event:
+    container_name: chesss-event
+    image: 'qsspy/distributed-chess-chess-event:latest'
+    ports:
+      - '8086:8085'
+    environment:
+      - KAFKA_BOOTSTRAP_ADDRESS=kafka:9092
+      - CHESS_FRONT_ADDRESS=<TODO> #Dodać adres gdy zostanie zrobione CI dla frontu
+    networks:
+      - dev-net
+    depends_on:
+      - kafka
+      # - chess-front

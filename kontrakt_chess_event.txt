@@ -1,0 +1,15 @@
+1. Subskrybuj strumień eventów w grze
+ENDPOINT : /events/board
+Metoda: GET
+REQUEST
+HEADER
+{
+	"Game-Topic-Id": "bd4d5303-9ac3-4109-bf36-72fe39dcd408" // UUID
+	"User-Token": "bd4d5303-9ac3-4109-bf36-72fe39dcd408" // UUID
+}
+
+Zwraca eventy opisane w kontrakt_kafka.
+Jest to endpoint reaktywny, który zwraca dane w sposób asynchroniczny.
+Można się zapiąć na froncie na niego wykorzystując EventSource
+
+https://medium.com/tokopedia-engineering/implementing-server-sent-events-in-reactjs-c36661d89468
