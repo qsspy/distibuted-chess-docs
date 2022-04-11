@@ -64,9 +64,25 @@ services:
       - '8086:8085'
     environment:
       - KAFKA_BOOTSTRAP_ADDRESS=kafka:9092
-      - CHESS_FRONT_ADDRESS=<TODO> #Dodać adres gdy zostanie zrobione CI dla frontu
+      - CHESS_FRONT_ADDRESS=chess-front:3000
     networks:
       - dev-net
     depends_on:
       - kafka
-      # - chess-front
+      
+  chess-front:
+    container_name: chess-front
+    build:
+      context: https://github.com/qsspy/distributed-chess-chess-front.git
+      args:
+        ROOM_SERVICE_ADDRESS: room-service:8081
+        CHESS_COMMAND_ADDRESS: chess-command:8083
+        CHESS_EVENT_ADDRESS: chess-event:8085
+    ports: 
+      - '3001:3000'
+    networks:
+      - dev-net
+    depends_on:
+      - chess-command
+      - chess-event
+      - room-service
