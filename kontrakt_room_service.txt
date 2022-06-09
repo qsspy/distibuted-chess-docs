@@ -12,6 +12,7 @@ SUCCESS :
 {
 	"status": 200, //integer
 	"roomOwnerToken": "52a707b7-bc68-48cf-8c90-2742764c16da" //UUID
+	"roomId": "52a707b7-bc68-48cf-8c90-2742764c16da" //UUID
 }
 ERROR
 {
