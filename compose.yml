@@ -11,8 +11,6 @@ services:
       - '2181'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
-    networks:
-      - dev-net
       
   kafka:
     container_name: kafka
@@ -27,8 +25,6 @@ services:
       - KAFKA_CFG_LISTENERS=INTERNAL://:9092,EXTERNAL://:9093
       - KAFKA_CFG_ADVERTISED_LISTENERS=INTERNAL://kafka:9092,EXTERNAL://localhost:9093
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=INTERNAL
-    networks:
-      - dev-net
     depends_on:
       - zookeeper
 
@@ -36,11 +32,9 @@ services:
     container_name: chess-command
     image: 'qsspy/distributed-chess-chess-command:latest'
     ports:
-      - '8084:8083'
+      - '8085:8083'
     environment:
       - KAFKA_BOOTSTRAP_ADDRESS=kafka:9092
-    networks:
-      - dev-net
     depends_on:
       - kafka
 
@@ -52,8 +46,6 @@ services:
     environment:
       - KAFKA_BOOTSTRAP_ADDRESS=kafka:9092
       - CHESS_COMMAND_ADDRESS=http://chess-command:8083
-    networks:
-      - dev-net
     depends_on:
       - kafka
 
@@ -65,8 +57,6 @@ services:
     environment:
       - KAFKA_BOOTSTRAP_ADDRESS=kafka:9092
       - CHESS_FRONT_ADDRESS=chess-front:3000
-    networks:
-      - dev-net
     depends_on:
       - kafka
       
@@ -75,13 +65,11 @@ services:
     build:
       context: https://github.com/qsspy/distributed-chess-chess-front.git
       args:
-        ROOM_SERVICE_ADDRESS: http://room-service:8081
-        CHESS_COMMAND_ADDRESS: http://chess-command:8083
-        CHESS_EVENT_ADDRESS: http://chess-event:8085
+        ROOM_SERVICE_ADDRESS: http://localhost:8082
+        CHESS_COMMAND_ADDRESS: http://localhost:8085
+        CHESS_EVENT_ADDRESS: http://localhost:8086
     ports: 
       - '3001:3000'
-    networks:
-      - dev-net
     depends_on:
       - chess-command
       - chess-event
